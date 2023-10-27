@@ -11,21 +11,32 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($categories as $category)    
+        @foreach ($categories as $category)
             <tr>
                 <td>{{ $category->id }}</td>
                 <td>{{ $category->title }}</td>
                 <td>
-                    <a href="{{ route('admin.categories.edit' , ['category' => $category]) }}" class="btn btn-info mr-3">Edit</a>
-                    <form action="{{ route('admin.categories.destroy', ['category' => $category]) }}" method="post">
-                        @method('delete')
-                        @csrf
+                    <div class="d-flex">
+                        <a href="{{ route('admin.categories.edit' , ['category' => $category]) }}" class="btn btn-info mr-3">Edit</a>
+                        <form action="{{ route('admin.categories.destroy', ['category' => $category]) }}" method="post"  onsubmit="deleteConfirm(event);">
+                            @method('delete')
+                            @csrf
 
-                        <button type="submit" class="btn btn-danger ml-3">Delete</button>
-                    </form>
+                            <button type="submit" class="btn btn-danger ml-3">Delete</button>
+                        </form>
+                    </div>
                 </td>
             </tr>
         @endforeach
     </tbody>
-  </table>
+</table>
+<script>
+    function deleteConfirm(event) {
+        event.preventDefault();
+        let result = confirm("آیا می خواهید آیتم حذف شود؟");
+        if (result) {
+            event.target.submit();
+        }
+    }
+</script>
 @endsection

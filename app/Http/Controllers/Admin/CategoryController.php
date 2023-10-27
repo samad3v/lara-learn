@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Category;
+use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -52,21 +52,18 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Category $category)
     {
-        $catrgory = Category::where('id', $id)->first();
-
         return view('admin.categories.edit')->with([
-            'category' => $catrgory
+            'category' => $category
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Category $category)
     {
-        $category = Category::where('id', $id)->first();
         $title = $request->title;
         $category->title = $title;
         $category->save();
@@ -78,8 +75,13 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        Category::where('id', $id)->delete();
-        return redirect(route('admin.categories.index'));
-
+        $category = Category::find($id);
+        if ($category->posts->count()==0){
+            $category->delete();
+            return redirect(route('admin.categories.index'));
+        }
+        return redirect(route('admin.categories.index'))->with([
+            'status' => 'this category cant be deleted!'
+        ]);
     }
 }
