@@ -24,8 +24,16 @@
             <td>{{ \Carbon\Carbon::parse($post->published_at)->format('Y/m/d - H:i') }}</td>
             <td>{{ $post->category->title }}</td>
             <td>{{ $post->status ? 'Published' : 'Draft' }}</td>
-            <td><a href="{{ route('admin.posts.edit', ['post' => $post]) }}" class="btn btn-info">Edit</a></td>
-            <td><a href="#" class="btn btn-danger mr-4">Delete</a></td>
+            <td>
+                <div class="d-flex">
+                    <a href="{{ route('admin.posts.edit', ['post' => $post]) }}" class="btn btn-info mr-2">Edit</a>
+                    <form action="{{ route('admin.posts.destroy', ['post' => $post]) }}" method="post">
+                        @method('delete')
+                        @csrf
+                        <input type="submit" class="btn btn-danger mr-4" value="Delete">
+                    </form>
+                </div>
+            </td>
         </tr>
         @endforeach
         </tbody>

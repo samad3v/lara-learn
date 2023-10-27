@@ -27,7 +27,7 @@
         <div class="row align-items-end">
             <div class="form-group col-md-6 mb-3">
                 <label class="my-1 mr-2" for="status">Status</label>
-                <select class="custom-select my-1 mr-sm-2" id="status" name="status" required>
+                <select class="custom-select my-1 mr-sm-2 @error('status') is-invalid @enderror" id="status" name="status" required>
                     <option value="0">Draft</option>
                     <option value="1">Published</option>
                 </select>

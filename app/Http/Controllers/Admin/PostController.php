@@ -46,7 +46,7 @@ class PostController extends Controller
         return redirect(route('admin.posts.index')) ->with([
             'status' => 'Post created successfully'
         ]);
-      
+
 
 
     }
@@ -62,25 +62,49 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Post $post)
+    public function edit($id)
     {
-        return view('admin.posts.edit');
+        $post = Post::find($id);
+        $categories = Category::all();
+
+        return view('admin.posts.edit')->with([
+            'post' => $post,
+            'categories' => $categories
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, $id)
     {
-        //
+        $post = Post::find($id);
+        $title = $request->get('title');
+        $status = $request->get('status');
+        $category_id = $request->get('category_id');
+        $content = $request->get('content');
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image')->store('posts');
+            $post->image = $image;
+        }
+
+        $post-> title = $title;
+        $post-> status = $status;
+        $post-> category_id = $category_id;
+        $post-> content = $content;
+        $post->save();
+
+        return redirect(route('admin.posts.index'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Post $post)
+    public function destroy($id)
     {
-        
-        
+        $post = Post::find($id);
+        $post->delete();
+        return redirect(route('admin.posts.index'));
     }
 }
