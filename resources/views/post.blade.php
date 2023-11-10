@@ -26,6 +26,36 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-12 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Add a comment</h5>
+                                <div class="card-text">
+                                    <form method="post" action="" >
+                                        @csrf
+                                        <input class="form-control mb-2" type="text" placeholder="name" name="name">
+                                        <input class="form-control mb-2" type="email" placeholder="email" name="email">
+                                        <textarea class="form-control mb-2" name="content" id="content" cols="30" rows="10"></textarea>
+                                        <button type="submit" class="btn btn-success">Submit</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            @foreach($post->comments as $comment)
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ $comment->name }}</h5>
+                                        <p class="card-text">{!! $comment->content !!}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
