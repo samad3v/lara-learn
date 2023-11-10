@@ -13,9 +13,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('admin.categories.index')->with([
-            'categories' => Category::all()
-        ]);
+       return view('admin.categories.index')->with([
+        'categories' => Category::all()
+       ]);
     }
 
     /**
@@ -35,7 +35,7 @@ class CategoryController extends Controller
         $category = new Category;
         $category->title = $title;
         $category->save();
-
+        
         return redirect(route('admin.categories.index'))->with([
             'status' => 'Category created successfully'
         ]);
@@ -67,7 +67,9 @@ class CategoryController extends Controller
         $title = $request->title;
         $category->title = $title;
         $category->save();
-        return redirect(route('admin.categories.index'));
+        return redirect(route('admin.categories.index'))->with([
+            'status' => 'Category edited successfully!'
+        ]);
     }
 
     /**
