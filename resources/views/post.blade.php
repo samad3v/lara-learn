@@ -31,9 +31,9 @@
                             <div class="card-body">
                                 <h5 class="card-title">Add a comment</h5>
                                 <div class="card-text">
-                                    <form method="post" action="" >
+                                    <form method="post" action="{{ route('comment.add', ['post' => $post->id]) }}" >
                                         @csrf
-                                        <input class="form-control mb-2" type="text" placeholder="name" name="name">
+                                        <input class="form-control mb-2" type="text" placeholder="name" id="name" name="name">
                                         <input class="form-control mb-2" type="email" placeholder="email" name="email">
                                         <textarea class="form-control mb-2" name="content" id="content" cols="30" rows="10"></textarea>
                                         <button type="submit" class="btn btn-success">Submit</button>

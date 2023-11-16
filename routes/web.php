@@ -25,7 +25,7 @@ Route::middleware('auth')
     ->group(function (){
         Route::get('/', [AdminHomeController::class, 'index'])->name('home');
         Route::resource('posts', PostController::class);
-        Route::resource('categories' , CategoryController::class);
+        Route::resource('categories', CategoryController::class);
     });
 
 Auth::routes();
@@ -33,3 +33,4 @@ Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::get('/posts/{post}', [HomeController::class, 'showPost'])->name('post.show');
+Route::post('/{post}/add_comment', [HomeController::class, 'addComment'])->name('comment.add');
