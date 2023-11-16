@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CommentController;
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\CategoryController;
@@ -26,6 +27,10 @@ Route::middleware('auth')
         Route::get('/', [AdminHomeController::class, 'index'])->name('home');
         Route::resource('posts', PostController::class);
         Route::resource('categories', CategoryController::class);
+        Route::get('comments', [CommentController::class, 'index'])->name('comments.index');
+        Route::get('/comments/{comment}', [CommentController::class, 'show'])->name('comment.show');
+        Route::delete('/comments/{comment}', [CommentController::class, 'delete'])->name('comment.destroy');
+        Route::patch('/comments/{comment}', [CommentController::class, 'changeStatus'])->name('comment.changeStatus');
     });
 
 Auth::routes();
@@ -33,4 +38,4 @@ Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::get('/posts/{post}', [HomeController::class, 'showPost'])->name('post.show');
-Route::post('/{post}/add_comment', [HomeController::class, 'addComment'])->name('comment.add');
+Route::post('/posts/{post}/add-comment', [HomeController::class, 'addComment'])->name('comment.add');

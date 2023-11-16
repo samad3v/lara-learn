@@ -8,6 +8,7 @@
                     <li class="list-group-item"><a href="{{ route('admin.home') }}">Dashboard</a></li>
                     <li class="list-group-item"><a href="{{ route('admin.posts.index') }}">Posts</a></li>
                     <li class="list-group-item"><a href="{{ route('admin.categories.index') }}">Categories</a></li>
+                    <li class="list-group-item"><a href="{{ route('admin.comments.index') }}">Comments</a></li>
                 </ul>
             </div>
             <div class="col-md-9">

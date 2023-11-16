@@ -23,27 +23,26 @@ class HomeController extends Controller
     {
         return view('post', [
             'categories' => Category::all(),
-            'post' => $post
+            'post' => $post->load(['comments' => function($query){
+                return $query->where('status', 'published');
+            }])
         ]);
     }
 
     public function addComment(Request $request, int $post)
     {
-        $name = $request->get('name');
-        $email = $request->get('email');
-        $content = $request->get('content');
-        $post_id = $post;
         $comment = new Comment;
-        $comment->name = $name;
-        $comment->email = $email;
-        $comment->content = $content;
-        $comment->post_id = $post_id;
+        $comment->name = $request->get('name');
+        $comment->email = $request->get('email');
+        $comment->content = $request->get('content');
+        $comment->post_id = $post;
+        $comment->status = $request->get('status');
         $comment->save();
 
-        return redirect(route('post.show', ['post' => $post_id]))->with([
+        return redirect(route('post.show', ['post' => $post]))->with([
             'comments' => Comment::all(),
             'status' => 'comment added successfully'
         ]);
-        
+
     }
 }

@@ -35,7 +35,7 @@ class CategoryController extends Controller
         $category = new Category;
         $category->title = $title;
         $category->save();
-        
+
         return redirect(route('admin.categories.index'))->with([
             'status' => 'Category created successfully'
         ]);
@@ -64,8 +64,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        $title = $request->title;
-        $category->title = $title;
+        $category->title = $request->title;
         $category->save();
         return redirect(route('admin.categories.index'))->with([
             'status' => 'Category edited successfully!'

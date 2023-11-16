@@ -11,6 +11,7 @@
                             <li class="list-group-item"><a href="{{}"></a></li>
                             <li class="list-group-item">Posts</li>
                             <li class="list-group-item">Categories</li>
+                            <li class="list-group-item">Comments</li>
                         </ul>
                     </div>
                 </div>
