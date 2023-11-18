@@ -36,7 +36,6 @@ class HomeController extends Controller
         $comment->email = $request->get('email');
         $comment->content = $request->get('content');
         $comment->post_id = $post;
-        $comment->status = $request->get('status');
         $comment->save();
 
         return redirect(route('post.show', ['post' => $post]))->with([

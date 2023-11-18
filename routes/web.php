@@ -29,7 +29,7 @@ Route::middleware('auth')
         Route::resource('categories', CategoryController::class);
         Route::get('comments', [CommentController::class, 'index'])->name('comments.index');
         Route::get('/comments/{comment}', [CommentController::class, 'show'])->name('comment.show');
-        Route::delete('/comments/{comment}', [CommentController::class, 'delete'])->name('comment.destroy');
+        Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comment.destroy');
         Route::patch('/comments/{comment}', [CommentController::class, 'changeStatus'])->name('comment.changeStatus');
     });
 

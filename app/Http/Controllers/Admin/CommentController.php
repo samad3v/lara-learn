@@ -22,6 +22,14 @@ class CommentController extends Controller
         ]);
     }
 
+    public function changeStatus(Request $request, Comment $comment)
+    {
+        return redirect(route('admin.comments.index'));
+        $comment = Comment::find($id)->where('status',pending)->update(['status' => publised]);
+        $comment->status = $request->get('status');
+        $comment->save();
+    }
+
     public function destroy($id)
     {
         $comment = Comment::find($id);
