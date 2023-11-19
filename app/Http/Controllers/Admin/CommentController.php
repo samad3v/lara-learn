@@ -22,10 +22,14 @@ class CommentController extends Controller
         ]);
     }
 
-    public function changeStatus(Request $request, Comment $comment)
-    {
-        $comment = Comment::find($id)->where('status',pending)->update(['status' => publised]);
-        $comment->status = $request->get('status');
+    public function changeStatus(Request $request,Comment $id)
+    {   
+        $comment = Comment::find($id);
+        if ($comment->status == "pending") {
+            $comment->status = "published";
+        }elseif ($comment->status == "published") {
+            $comment->status = "pending";
+        }
         $comment->save();
         return redirect(route('admin.comments.index'));
     }

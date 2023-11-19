@@ -79,20 +79,16 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         $post = Post::find($id);
-        $title = $request->get('title');
-        $status = $request->get('status');
-        $category_id = $request->get('category_id');
-        $content = $request->get('content');
+        $post->title = $request->title;
+        $post->status = $request->status;
+        $post->category_id = $request->category_id;
+        $post->content = $request->content;
 
         if ($request->hasFile('image')) {
             $image = $request->file('image')->store('posts');
             $post->image = $image;
         }
 
-        $post-> title = $title;
-        $post-> status = $status;
-        $post-> category_id = $category_id;
-        $post-> content = $content;
         $post->save();
 
         return redirect(route('admin.posts.index'));

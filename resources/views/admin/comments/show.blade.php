@@ -8,7 +8,7 @@
                 <h6 class="card-subtitle mb-2 text-muted">{{ $comment->email }}</h6>
                 <p class="card-text">{{ $comment->content }}</p>
                 <div class="d-flex">
-                    <form action="{{ route('admin.comment.changeStatus', ['comment' => $comment]) }}">
+                    <form action="{{ route('admin.comment.changeStatus', ['comment' => $comment]) }}" method="post">
                         @csrf
                         @method('patch')
                         @if($comment->status == 'pending')
