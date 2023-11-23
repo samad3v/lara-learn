@@ -74,9 +74,8 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Category $category)
     {
-        $category = Category::find($id);
         if ($category->posts->count()==0){
             $category->delete();
             return redirect(route('admin.categories.index'));

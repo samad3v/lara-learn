@@ -25,7 +25,6 @@ class CommentController extends Controller
 
     public function changeStatus(Request $request, int $id)
     {   
-        $comment = Comment::find($id);
         if ($comment->status == "pending") {
             $comment->status = "published";
         }elseif ($comment->status == "published") {
