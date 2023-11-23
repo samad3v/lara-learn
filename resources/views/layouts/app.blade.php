@@ -30,6 +30,7 @@
             padding: 10px 35px;
         }
     </style>
+    <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/super-build/ckeditor.js"></script>
 </head>
 <body>
     <div id="app">

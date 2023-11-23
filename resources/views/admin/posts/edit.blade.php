@@ -54,6 +54,15 @@
             </div>
         </div>
         <div class="form-group">
+            <label for="summery">Summery</label>
+            <textarea class="form-control @error('summery') is-invalid @enderror" id="summery" rows="5" name="summery" required>{{ old('summery', $post->summery) }}</textarea>
+            @error('summery')
+            <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
+        <div class="form-group">
             <label for="content">Content</label>
             <textarea class="form-control @error('content') is-invalid @enderror" id="content" rows="5" name="content" required>{{ old('content', $post->content) }}</textarea>
             @error('content')

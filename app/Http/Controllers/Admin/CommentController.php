@@ -23,8 +23,8 @@ class CommentController extends Controller
         ]);
     }
 
-    public function changeStatus(Request $request, int $id)
-    {   
+    public function changeStatus(Request $request, Comment $comment)
+    {
         if ($comment->status == "pending") {
             $comment->status = "published";
         }elseif ($comment->status == "published") {
@@ -34,9 +34,8 @@ class CommentController extends Controller
         return redirect(route('admin.comments.index'));
     }
 
-    public function destroy($id)
+    public function destroy(Comment $comment)
     {
-        $comment = Comment::find($id);
         $comment->delete();
         return redirect(route('admin.comments.index'));
     }

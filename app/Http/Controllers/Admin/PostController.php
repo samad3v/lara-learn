@@ -30,25 +30,28 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
+        $request->validate([
             'title' => ['required', 'min:5', 'max:255'],
             'content' => ['required', 'min:10'],
             'image' => ['required', 'file'],
             'status' => ['required', 'min:0', 'max:1' , 'integer'],
+            'summery' => ['required', 'string'],
             'category_id' => ['required','exists:categories,id']
         ]);
 
-        $data['image'] = $request->file('image')->store('posts');
-        $data['user_id'] = auth()->user()->id;
-
-        Post::create($data);
+        $post = new Post();
+        $post->title = $request->get('title');
+        $post->content = $request->get('content');
+        $post->image = $request->file('image')->store('posts');
+        $post->status = $request->get('status');
+        $post->summery = $request->get('summery');
+        $post->category_id = $request->get('category_id');
+        $post->user_id = auth()->user()->id;
+        $post->save();
 
         return redirect(route('admin.posts.index')) ->with([
             'status' => 'Post created successfully'
         ]);
-
-
-
     }
 
     /**
@@ -82,7 +85,8 @@ class PostController extends Controller
         $post->title = $request->title;
         $post->status = $request->status;
         $post->category_id = $request->category_id;
-        $post->content = $request->content;
+        $post->content = $request->get('content');
+        $post->summery = $request->summery;
 
         if ($request->hasFile('image')) {
             $image = $request->file('image')->store('posts');
