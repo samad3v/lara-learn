@@ -4,9 +4,10 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">{{ $comment->name }}</h5>
-                <h6 class="card-subtitle mb-2 text-muted">{{ $comment->email }}</h6>
-                <p class="card-text">{{ $comment->content }}</p>
+                <h5 class="card-title"><b>User Name : </b>{{ $comment->name }}</h6>
+                <h6 class="card-subtitle mb-2 text-muted"><b>Email : </b>{{ $comment->email }}</h6>
+                <p class="card-text"><b>Content : </b><br>{{ $comment->content }}</p>
+                <p class="status text-muted"><b>Current Status :  </b>{{ $comment->status }}</p>
                 <div class="d-flex">
                     <form action="{{ route('admin.comment.changeStatus', ['comment' => $comment]) }}" method="post">
                         @csrf

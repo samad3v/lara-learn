@@ -26,6 +26,7 @@ Route::middleware('auth')
     ->group(function (){
         Route::get('/', [AdminHomeController::class, 'index'])->name('home');
         Route::resource('posts', PostController::class);
+        Route::patch('/posts/{post}', [PostController::class, 'changeStatus'])->name('post.changeStatus');
         Route::resource('categories', CategoryController::class);
         Route::get('comments', [CommentController::class, 'index'])->name('comments.index');
         Route::get('/comments/{comment}', [CommentController::class, 'show'])->name('comment.show');

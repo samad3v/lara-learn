@@ -98,6 +98,17 @@ class PostController extends Controller
         return redirect(route('admin.posts.index'));
     }
 
+    public function changeStatus(Request $request, Post $post)
+    {
+        if ($post->status == "pending") {
+            $post->status = "published";
+        }elseif ($post->status == "published") {
+            $post->status = "pending";
+        }
+        $post->save();
+        return redirect(route('admin.posts.index'));
+    }
+
     /**
      * Remove the specified resource from storage.
      */

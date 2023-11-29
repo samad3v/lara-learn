@@ -11,7 +11,7 @@
             <th scope="col">Author</th>
             <th scope="col">Publish Date</th>
             <th scope="col">Category</th>
-            <th scope="col">Status</th>
+            <th scope="col">Change Status</th>
             <th scope="col">Operations</th>
         </tr>
         </thead>
@@ -23,7 +23,19 @@
             <td>{{ $post->author->name }}</td>
             <td>{{ \Carbon\Carbon::parse($post->published_at)->format('Y/m/d - H:i') }}</td>
             <td>{{ $post->category->title }}</td>
-            <td>{{ $post->status ? 'Published' : 'Draft' }}</td>
+            <td>
+                <form action="{{ route('admin.post.changeStatus', ['post' => $post]) }}" method="post">
+                        @csrf
+                        @method('patch')
+                        @if($post->status == 'pending')
+                            <input type="hidden" value="publish" name="new_status">
+                            <input type="submit" class="card-link btn btn-primary" value="Publish">
+                        @else
+                            <input type="hidden" value="pending" name="new_status">
+                            <input type="submit" class="card-link btn btn-primary" value="Pending">
+                        @endif
+                    </form>
+                </td>
             <td>
                 <div class="d-flex">
                     <a href="{{ route('admin.posts.edit', ['post' => $post]) }}" class="btn btn-info mr-2">Edit</a>
