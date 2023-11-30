@@ -20,18 +20,20 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index']);
 
-Route::middleware('auth')
+Route::middleware(['auth', 'permission:admin'])
     ->prefix('admin')
     ->name('admin.')
     ->group(function (){
         Route::get('/', [AdminHomeController::class, 'index'])->name('home');
-        Route::resource('posts', PostController::class);
-        Route::patch('/posts/{post}', [PostController::class, 'changeStatus'])->name('post.changeStatus');
+        Route::resource('posts', PostController::class)->middleware(['role:su|writer']);
+        Route::patch('/posts/{post}/change-status', [PostController::class, 'changeStatus'])->name('post.changeStatus');
         Route::resource('categories', CategoryController::class);
-        Route::get('comments', [CommentController::class, 'index'])->name('comments.index');
-        Route::get('/comments/{comment}', [CommentController::class, 'show'])->name('comment.show');
-        Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comment.destroy');
-        Route::patch('/comments/{comment}', [CommentController::class, 'changeStatus'])->name('comment.changeStatus');
+        Route::middleware(['role:su|writer'])->group(function () {
+            Route::get('comments', [CommentController::class, 'index'])->name('comments.index');
+            Route::get('/comments/{comment}', [CommentController::class, 'show'])->name('comment.show');
+            Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comment.destroy');
+            Route::patch('/comments/{comment}', [CommentController::class, 'changeStatus'])->name('comment.changeStatus');
+        });
     });
 
 Auth::routes();

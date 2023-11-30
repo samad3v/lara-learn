@@ -27,11 +27,11 @@
                 <form action="{{ route('admin.post.changeStatus', ['post' => $post]) }}" method="post">
                         @csrf
                         @method('patch')
-                        @if($post->status == 'pending')
-                            <input type="hidden" value="publish" name="new_status">
+                        @if($post->status == 0)
+                            <input type="hidden" value="1" name="new_status">
                             <input type="submit" class="card-link btn btn-primary" value="Publish">
                         @else
-                            <input type="hidden" value="pending" name="new_status">
+                            <input type="hidden" value="0" name="new_status">
                             <input type="submit" class="card-link btn btn-primary" value="Pending">
                         @endif
                     </form>
