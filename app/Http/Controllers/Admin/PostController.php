@@ -81,6 +81,16 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $request->validate([
+            'title' => ['required', 'min:5', 'max:255'],
+            'content' => ['required', 'min:10'],
+            'image' => ['nullable', 'file'],
+            'status' => ['required', 'min:0', 'max:1' , 'integer'],
+            'summery' => ['required', 'string'],
+            'category_id' => ['required','exists:categories,id']
+        ]);
+
         $post = Post::find($id);
         $post->title = $request->title;
         $post->status = $request->status;
@@ -89,8 +99,7 @@ class PostController extends Controller
         $post->summery = $request->summery;
 
         if ($request->hasFile('image')) {
-            $image = $request->file('image')->store('posts');
-            $post->image = $image;
+            $post->image = $request->file('image')->store('posts');
         }
 
         $post->save();
@@ -98,13 +107,9 @@ class PostController extends Controller
         return redirect(route('admin.posts.index'));
     }
 
-    public function changeStatus(Request $request, Post $post)
+    public function changeStatus(Post $post)
     {
-        if ($post->status == "pending") {
-            $post->status = "published";
-        }elseif ($post->status == "published") {
-            $post->status = "pending";
-        }
+        $post->status = request()->get('new_status');
         $post->save();
         return redirect(route('admin.posts.index'));
     }
